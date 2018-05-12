@@ -10,7 +10,7 @@ router.get('/',(req,res,next)=>{
 			products:doc
 		});
 	}).catch(err=>{
-		console.log("No Data",err);
+		console.log("No Data Found",err);
 	});
 });
 router.post('/',checkAuth,(req,res,next)=>{
