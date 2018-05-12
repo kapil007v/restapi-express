@@ -31,7 +31,11 @@ app.use((req,res,next)=>{
 //handles routes middlware
 app.use('/products', productRoutes);
 app.use('/user', userRoutes);
-
+app.get('/',(req,res,next)=>{
+	res.status(200).json({
+		message:"Connected",
+	});
+});
 app.use((req,res,next)=>{
 	const error = new Error('Not Found');
 	error.status = 404;
