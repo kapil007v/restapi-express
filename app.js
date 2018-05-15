@@ -3,7 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
-
+const path = require('path');
 
 
 const productRoutes = require('./api/routes/products');
@@ -11,8 +11,12 @@ const userRoutes = require('./api/routes/users');
 
 
 // mongoose.connect('mongodb+srv://kapilvishwakarma26%40gmail.com:ksvksv%40007@cluster0-mc751.mongodb.net/test?retryWrites=true');
-mongoose.connect('mongodb://localhost:27017');
+// mongoose.connect('mongodb://localhost:27017');
+mongoose.connect('mongodb+srv://mongodb-stitch-rest-vyjac:ksvksv007@cluster0-mc751.mongodb.net/test?retryWrites=true')
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, 'public')))
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended:false}));
@@ -28,13 +32,14 @@ app.use((req,res,next)=>{
 	}
 	next();
 });
+
 //handles routes middlware
 app.use('/products', productRoutes);
 app.use('/user', userRoutes);
+
 app.get('/',(req,res,next)=>{
-	res.status(200).json({
-		message:"Connected",
-	});
+	res.status(200);
+	res.render('pages/index');
 });
 app.use((req,res,next)=>{
 	const error = new Error('Not Found');
